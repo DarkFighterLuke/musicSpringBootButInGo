@@ -2,11 +2,13 @@ package repositories
 
 import (
 	"musicSpringBootButInGo/models"
+	"sort"
 
 	"gorm.io/gorm"
 )
 
 type TracciaRepositoryInterface interface {
+	GetLastId() (uint, error)
 	FindAll() ([]models.Traccia, error)
 	FindById(id uint) (*models.Traccia, error)
 	Insert(traccia *models.Traccia) (uint, error)
@@ -24,16 +26,30 @@ func NewTracciaRepository(DB *gorm.DB) TracciaRepositoryInterface {
 	}
 }
 
-func (a *tracciaRepository) FindAll() ([]models.Traccia, error) {
+func (t *tracciaRepository) GetLastId() (uint, error) {
+	tracce, err := t.FindAll()
+	if err != nil {
+		return 0, err
+	}
+
+	sort.Slice(tracce, func(i, j int) bool {
+		return tracce[i].TracciaId > tracce[j].TracciaId
+	})
+
+	return tracce[0].TracciaId, nil
+}
+
+func (t *tracciaRepository) FindAll() ([]models.Traccia, error) {
 	var tracce []models.Traccia
-	result := a.DB.Find(&tracce)
+	result := t.DB.Find(&tracce)
 
 	return tracce, result.Error
 }
 
-func (a *tracciaRepository) FindById(id uint) (*models.Traccia, error) {
+func (t *tracciaRepository) FindById(id uint) (*models.Traccia, error) {
 	var traccia models.Traccia
-	result := a.DB.Find(&traccia)
+	traccia.TracciaId = id
+	result := t.DB.Debug().Find(&traccia)
 
 	var err error
 	if result.RowsAffected == 0 {
@@ -43,20 +59,20 @@ func (a *tracciaRepository) FindById(id uint) (*models.Traccia, error) {
 	return &traccia, err
 }
 
-func (a *tracciaRepository) Insert(traccia *models.Traccia) (uint, error) {
-	result := a.DB.Create(&traccia)
+func (t *tracciaRepository) Insert(traccia *models.Traccia) (uint, error) {
+	result := t.DB.Create(&traccia)
 
 	return traccia.TracciaId, result.Error
 }
 
-func (a *tracciaRepository) Update(traccia *models.Traccia) error {
-	result := a.DB.Save(&traccia)
+func (t *tracciaRepository) Update(traccia *models.Traccia) error {
+	result := t.DB.Save(&traccia)
 
 	return result.Error
 }
 
-func (a *tracciaRepository) Delete(traccia *models.Traccia) error {
-	result := a.DB.Delete(&traccia)
+func (t *tracciaRepository) Delete(traccia *models.Traccia) error {
+	result := t.DB.Delete(&traccia)
 
 	return result.Error
 }

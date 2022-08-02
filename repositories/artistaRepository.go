@@ -48,6 +48,7 @@ func (a *artistaRepository) FindAll() ([]models.Artista, error) {
 
 func (a *artistaRepository) FindById(id uint) (*models.Artista, error) {
 	var artista models.Artista
+	artista.ArtistaId = id
 	result := a.DB.Find(&artista)
 
 	var err error
