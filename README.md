@@ -1,6 +1,9 @@
 # musicSpringBootButInGo
 A Spring Boot example project rewritten in Go.
 
+## Requirements
+The project uses Go modules, but ODPI-C client has to be installed in order to get the Oracle DB GORM driver to work. See [ODPI-C installation](https://oracle.github.io/odpi/doc/installation.html).
+
 ## How to run
 ```
 git clone https://github.com/DarkFighterLuke/musicSpringBootButInGo.git
