@@ -58,14 +58,14 @@ func GetAllArtisti(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	artista, err := artistaRepository.FindAll()
+	artisti, err := artistaRepository.FindAll()
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(500)
 		return
 	}
 
-	artistaJson, err := json.Marshal(&artista)
+	artistiJson, err := json.Marshal(&artisti)
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(500)
@@ -73,7 +73,7 @@ func GetAllArtisti(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Content-Type", "application/json")
-	w.Write(artistaJson)
+	w.Write(artistiJson)
 }
 
 func GetArtistaById(w http.ResponseWriter, r *http.Request) {
