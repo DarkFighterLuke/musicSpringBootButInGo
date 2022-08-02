@@ -31,7 +31,6 @@ func AddAlbum(w http.ResponseWriter, r *http.Request) {
 
 	albumRepository := repositories.NewAlbumRepository(db)
 	lastId, err := albumRepository.GetLastId()
-	fmt.Println(lastId)
 	album.AlbumId = lastId + 1
 
 	id, err := albumRepository.Insert(&album)
