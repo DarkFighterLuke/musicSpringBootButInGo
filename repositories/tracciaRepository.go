@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"fmt"
 	"musicSpringBootButInGo/models"
 	"sort"
 
@@ -31,12 +32,13 @@ func (t *tracciaRepository) GetLastId() (uint, error) {
 	if err != nil {
 		return 0, err
 	}
+	fmt.Printf("%#v", tracce)
 
 	sort.Slice(tracce, func(i, j int) bool {
-		return tracce[i].TracciaId > tracce[j].TracciaId
+		return tracce[i].TracceId > tracce[j].TracceId
 	})
 
-	return tracce[0].TracciaId, nil
+	return tracce[0].TracceId, nil
 }
 
 func (t *tracciaRepository) FindAll() ([]models.Traccia, error) {
@@ -48,7 +50,7 @@ func (t *tracciaRepository) FindAll() ([]models.Traccia, error) {
 
 func (t *tracciaRepository) FindById(id uint) (*models.Traccia, error) {
 	var traccia models.Traccia
-	traccia.TracciaId = id
+	traccia.TracceId = id
 	result := t.DB.Debug().Find(&traccia)
 
 	var err error
@@ -62,7 +64,7 @@ func (t *tracciaRepository) FindById(id uint) (*models.Traccia, error) {
 func (t *tracciaRepository) Insert(traccia *models.Traccia) (uint, error) {
 	result := t.DB.Create(&traccia)
 
-	return traccia.TracciaId, result.Error
+	return traccia.TracceId, result.Error
 }
 
 func (t *tracciaRepository) Update(traccia *models.Traccia) error {

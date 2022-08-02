@@ -20,5 +20,11 @@ func GetInitializedRouter() *mux.Router {
 	r.HandleFunc("/music-spring-boot/artista/set/{id}", controllers.UpdateArtista).Methods("PUT").Headers("Content-Type", "application/json")
 	r.HandleFunc("/music-spring-boot/artista/remove/{id}", controllers.DeleteArtista).Methods("DELETE")
 
+	r.HandleFunc("/music-spring-boot/traccia/add", controllers.AddTraccia).Methods("POST").Headers("Content-Type", "application/json")
+	r.HandleFunc("/music-spring-boot/traccia/list", controllers.GetAllTracce).Methods("GET")
+	r.HandleFunc("/music-spring-boot/traccia/get/{id}", controllers.GetTracciaById).Methods("GET")
+	r.HandleFunc("/music-spring-boot/traccia/set/{id}", controllers.UpdateTraccia).Methods("PUT").Headers("Content-Type", "application/json")
+	r.HandleFunc("/music-spring-boot/traccia/remove/{id}", controllers.DeleteTraccia).Methods("DELETE")
+
 	return r
 }

@@ -10,7 +10,7 @@ type Album struct {
 	DataUscita utils.CustomeTime `gorm:"embedded" json:"dataUscita"`
 	Genere     string            `json:"genere"`
 	ArtistaId  uint              `gorm:"column:artisti_id" json:"artistaId"`
-	Tracce     []Traccia         `gorm:"foreignKey:TracciaId"`
+	Tracce     []Traccia         `gorm:"foreignKey:TracceId"`
 }
 
 func (a *Album) TableName() string {
